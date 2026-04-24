@@ -1,6 +1,14 @@
 const scoreNum = document.querySelector('.score__number') as HTMLElement,
   capybaraImg = document.querySelector('.img img') as HTMLElement;
-let scoreAsNum: number = 0;
+
+document.addEventListener('DOMContentLoaded', (): void => {
+    let reloadScore = localStorage.getItem('score');
+    scoreNum.textContent = reloadScore;
+    if (!reloadScore) {
+        scoreNum.textContent = '0';
+        localStorage.setItem('score', '0');
+    }
+})
 
 capybaraImg.addEventListener('click', (): void => {
     const clickEffect: string = 'click-effect'
@@ -8,7 +16,10 @@ capybaraImg.addEventListener('click', (): void => {
     setTimeout((): void => {
         capybaraImg.classList.remove(clickEffect);
     }, 55);
-    scoreAsNum += 1;
-    let score: string = scoreAsNum.toString();
-    scoreNum.textContent = score;
+    let currentScore = localStorage.getItem('score') as string;
+    let currentScoreAsNum: number = Number(currentScore);
+    let newScore: number = currentScoreAsNum + 1;
+    let newScoreAsString: string = newScore.toString();
+    scoreNum.textContent = newScoreAsString;
+    localStorage.setItem('score', newScoreAsString);
 })
