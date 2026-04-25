@@ -1,7 +1,4 @@
-* {
-    margin: 0;
-    padding: 0;
-}
+@import url('./reset.css');
 
 .wrapper {
     width: 100vw;
@@ -41,6 +38,37 @@ main {
     padding-top: 30vh;
 }
 
+.speed-bar {
+    display: flex;
+    flex-direction: column-reverse;
+    row-gap: 40px;
+    position: absolute;
+    left: 5vw;
+    align-items: center;
+}
+
+.speed-bar > progress {
+    transform: rotate(-90deg);
+    accent-color: #eeff04;
+    background-color: #eeff04;
+}
+
+.speed-bar > progress:-webkit-progress-bar {
+    background-color: #fff;
+}
+
+.normal-speed {
+    width: 200px;
+    height: 50px;
+    z-index: 1;
+}
+
+.double-speed {
+    width: 50px;
+    height: 100px;
+    z-index: 0;
+}
+
 .capybara {
     transition: transform 0.2s linear;
 }
@@ -49,9 +77,23 @@ main {
     transform: scale(0.75);
 }
 
+footer {
+    margin-top: 30px;
+    margin-bottom: 30px;
+}
+
 @media (max-width: 800px) {
     .score, .heading {
         font-size: 20px;
+    }
+    .speed-bar {
+        left: 3vw;
+    }
+}
+
+@media (max-width: 525px) {
+    .speed-bar {
+        left: -15vw;
     }
 }
 
