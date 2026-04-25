@@ -1,5 +1,8 @@
 const scoreNum = document.querySelector('.score__number') as HTMLElement,
-  capybaraImg = document.querySelector('.img img') as HTMLElement;
+  capybaraImg = document.querySelector('.img img') as HTMLElement,
+  clickAudio: HTMLAudioElement = new Audio('./../audio/click.mp3');
+
+clickAudio.volume = 0.15;
 
 document.addEventListener('DOMContentLoaded', (): void => {
     let reloadScore = localStorage.getItem('score');
@@ -11,6 +14,7 @@ document.addEventListener('DOMContentLoaded', (): void => {
 })
 
 capybaraImg.addEventListener('click', (): void => {
+    clickAudio.play();
     const clickEffect: string = 'click-effect'
     capybaraImg.classList.add(clickEffect);
     setTimeout((): void => {

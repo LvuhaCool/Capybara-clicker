@@ -1,5 +1,6 @@
 "use strict";
-const scoreNum = document.querySelector('.score__number'), capybaraImg = document.querySelector('.img img');
+const scoreNum = document.querySelector('.score__number'), capybaraImg = document.querySelector('.img img'), clickAudio = new Audio('./../audio/click.mp3');
+clickAudio.volume = 0.15;
 document.addEventListener('DOMContentLoaded', () => {
     let reloadScore = localStorage.getItem('score');
     scoreNum.textContent = reloadScore;
@@ -9,6 +10,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 });
 capybaraImg.addEventListener('click', () => {
+    clickAudio.play();
     const clickEffect = 'click-effect';
     capybaraImg.classList.add(clickEffect);
     setTimeout(() => {
