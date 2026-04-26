@@ -3,10 +3,12 @@ const scoreNum = document.querySelector('.score__number'), capybaraImg = documen
 clickAudio.volume = 0.15;
 document.addEventListener('DOMContentLoaded', () => {
     let reloadScore = localStorage.getItem('score');
-    scoreNum.textContent = reloadScore;
     if (!reloadScore) {
         scoreNum.textContent = '0';
         localStorage.setItem('score', '0');
+    }
+    else {
+        scoreNum.textContent = reloadScore;
     }
 });
 capybaraImg.addEventListener('click', () => {
@@ -22,4 +24,8 @@ capybaraImg.addEventListener('click', () => {
     let newScoreAsString = newScore.toString();
     scoreNum.textContent = newScoreAsString;
     localStorage.setItem('score', newScoreAsString);
+});
+capybaraImg.addEventListener('pointerup', () => {
+    clickAudio.pause();
+    clickAudio.currentTime = 0;
 });

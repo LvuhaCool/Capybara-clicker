@@ -50,11 +50,6 @@ main {
 .speed-bar > progress {
     transform: rotate(-90deg);
     accent-color: #eeff04;
-    background-color: #eeff04;
-}
-
-.speed-bar > progress:-webkit-progress-bar {
-    background-color: #fff;
 }
 
 .normal-speed {

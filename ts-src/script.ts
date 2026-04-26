@@ -5,11 +5,13 @@ const scoreNum = document.querySelector('.score__number') as HTMLElement,
 clickAudio.volume = 0.15;
 
 document.addEventListener('DOMContentLoaded', (): void => {
-    let reloadScore = localStorage.getItem('score');
-    scoreNum.textContent = reloadScore;
+    let reloadScore: string | null = localStorage.getItem('score');
     if (!reloadScore) {
         scoreNum.textContent = '0';
         localStorage.setItem('score', '0');
+    }
+    else {
+        scoreNum.textContent = reloadScore;
     }
 })
 
@@ -26,4 +28,9 @@ capybaraImg.addEventListener('click', (): void => {
     let newScoreAsString: string = newScore.toString();
     scoreNum.textContent = newScoreAsString;
     localStorage.setItem('score', newScoreAsString);
+})
+
+capybaraImg.addEventListener('pointerup', (): void => {
+    clickAudio.pause();
+    clickAudio.currentTime = 0;
 })

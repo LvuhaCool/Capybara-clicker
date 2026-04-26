@@ -6,18 +6,3 @@
 body {
     overflow-x: hidden;
 }
-
-progress {
-    -webkit-appearance: none;
-    -moz-appearance: none;
-    appearance: none;
-    overflow: hidden;
-}
-
-progress::-webkit-progress-bar, progress::-webkit-progress-value, progress::-moz-progress-bar {
-    -webkit-appearance: none;
-    -moz-appearance: none;
-    appearance: none;
-    overflow: hidden;
-}
-
