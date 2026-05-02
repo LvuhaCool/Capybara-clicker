@@ -1,17 +1,26 @@
 const scoreNum = document.querySelector('.score__number') as HTMLElement,
   capybaraImg = document.querySelector('.img img') as HTMLElement,
   clickAudio: HTMLAudioElement = new Audio('./../audio/click.mp3'),
-  normalVelocityBarValue = document.querySelector('.normal-speed')?.getAttribute('value') as string,
-  doubleVelocityBarValue = document.querySelector('.double-speed')?.getAttribute('value') as string,
-  normalVelocityBarMaxProgress: number = 2,
-  doubleVelocityMaxProgress: number = 1,
-  bestClickInterval: number = 125;
+  normalVelocityBar = document.querySelector('.normal-speed') as HTMLElement,
+  doubleVelocityBar = document.querySelector('.double-speed') as HTMLElement,
+  normalVelocityBarMaxValue: number = 30,
+  doubleVelocityBarMaxValue: number = 10;
+let normalVelocityBarValue: number = Number(document.querySelector('.normal-speed')?.getAttribute('value')) || 0,
+  doubleVelocityBarValue: number = Number(document.querySelector('.double-speed')?.getAttribute('value')) || 0;
 
-let timestamps: number[] = [];
+setInterval(() => {
+    if (normalVelocityBarValue === 0) {
+        normalVelocityBarValue = normalVelocityBarValue;
+    } else if (normalVelocityBarValue > 0 && doubleVelocityBarValue === 0) {
+        normalVelocityBarValue--;
+        normalVelocityBar.setAttribute('value', normalVelocityBarValue.toString());
+    } else if (doubleVelocityBarValue > 0) {
+        doubleVelocityBarValue--;
+        doubleVelocityBar.setAttribute('value', doubleVelocityBarValue.toString());
+    }
+}, 300);
 
-clickAudio.volume = 0.15;
-
-document.addEventListener('DOMContentLoaded', (): void => {
+  document.addEventListener('DOMContentLoaded', (): void => {
     let reloadScore: string | null = localStorage.getItem('score');
 
     if (!reloadScore) {
@@ -36,16 +45,17 @@ capybaraImg.addEventListener('click', (): void => {
     let currentScoreAsNum: number = Number(currentScore);
     let newScore: number = currentScoreAsNum + 1;
 
-    const now: number = Date.now();
-    timestamps.unshift(now);
-    
+    // 1. Если первая шкала еще не полная — заполняем её
+if (normalVelocityBarValue < normalVelocityBarMaxValue && doubleVelocityBarValue === 0) {
+    normalVelocityBarValue++;
+    normalVelocityBar.setAttribute('value', normalVelocityBarValue.toString());
+} 
+// 2. Если первая полная (или уже есть заряд во второй) и вторая не полная — заполняем вторую
+else if (doubleVelocityBarValue < doubleVelocityBarMaxValue) {
+    doubleVelocityBarValue++;
+    doubleVelocityBar.setAttribute('value', doubleVelocityBarValue.toString());
+}
 
-    if (timestamps.length === 2) {
-        const velocity: number = timestamps[0] - timestamps[1];
-        const velocityQuality: number = Number((1 / (velocity / 125)).toFixed(2));
-        console.log(velocityQuality);
-        
-    }
 
     let newScoreAsString: string = newScore.toString();
     scoreNum.textContent = newScoreAsString;
