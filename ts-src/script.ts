@@ -4,7 +4,9 @@ const scoreNum = document.querySelector('.score__number') as HTMLElement,
   normalVelocityBar = document.querySelector('.normal-speed') as HTMLElement,
   doubleVelocityBar = document.querySelector('.double-speed') as HTMLElement,
   normalVelocityBarMaxValue: number = 30,
-  doubleVelocityBarMaxValue: number = 10;
+  doubleVelocityBarMaxValue: number = 10,
+  clickScoreAddition: number = 1,
+  clickDoubleScoreAddition: number = 2;
 let normalVelocityBarValue: number = Number(document.querySelector('.normal-speed')?.getAttribute('value')) || 0,
   doubleVelocityBarValue: number = Number(document.querySelector('.double-speed')?.getAttribute('value')) || 0;
 
@@ -43,7 +45,14 @@ capybaraImg.addEventListener('click', (): void => {
 
     let currentScore = localStorage.getItem('score') as string;
     let currentScoreAsNum: number = Number(currentScore);
-    let newScore: number = currentScoreAsNum + 1;
+    let clickAddition: number;
+    if (doubleVelocityBarValue > 0 || normalVelocityBarValue === normalVelocityBarMaxValue && doubleVelocityBarValue === 0) {
+        clickAddition = clickDoubleScoreAddition
+    }
+    else {
+        clickAddition = clickScoreAddition
+    };
+    let newScore: number = currentScoreAsNum + clickAddition;
 
     // 1. Если первая шкала еще не полная — заполняем её
 if (normalVelocityBarValue < normalVelocityBarMaxValue && doubleVelocityBarValue === 0) {
@@ -55,8 +64,6 @@ else if (doubleVelocityBarValue < doubleVelocityBarMaxValue) {
     doubleVelocityBarValue++;
     doubleVelocityBar.setAttribute('value', doubleVelocityBarValue.toString());
 }
-
-
     let newScoreAsString: string = newScore.toString();
     scoreNum.textContent = newScoreAsString;
     localStorage.setItem('score', newScoreAsString);

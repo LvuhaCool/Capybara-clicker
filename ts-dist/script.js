@@ -1,6 +1,6 @@
 "use strict";
 var _a, _b;
-const scoreNum = document.querySelector('.score__number'), capybaraImg = document.querySelector('.img img'), clickAudio = new Audio('./../audio/click.mp3'), normalVelocityBar = document.querySelector('.normal-speed'), doubleVelocityBar = document.querySelector('.double-speed'), normalVelocityBarMaxValue = 30, doubleVelocityBarMaxValue = 10;
+const scoreNum = document.querySelector('.score__number'), capybaraImg = document.querySelector('.img img'), clickAudio = new Audio('./../audio/click.mp3'), normalVelocityBar = document.querySelector('.normal-speed'), doubleVelocityBar = document.querySelector('.double-speed'), normalVelocityBarMaxValue = 30, doubleVelocityBarMaxValue = 10, clickScoreAddition = 1, clickDoubleScoreAddition = 2;
 let normalVelocityBarValue = Number((_a = document.querySelector('.normal-speed')) === null || _a === void 0 ? void 0 : _a.getAttribute('value')) || 0, doubleVelocityBarValue = Number((_b = document.querySelector('.double-speed')) === null || _b === void 0 ? void 0 : _b.getAttribute('value')) || 0;
 setInterval(() => {
     if (normalVelocityBarValue === 0) {
@@ -34,7 +34,15 @@ capybaraImg.addEventListener('click', () => {
     }, 55);
     let currentScore = localStorage.getItem('score');
     let currentScoreAsNum = Number(currentScore);
-    let newScore = currentScoreAsNum + 1;
+    let clickAddition;
+    if (doubleVelocityBarValue > 0 || normalVelocityBarValue === normalVelocityBarMaxValue && doubleVelocityBarValue === 0) {
+        clickAddition = clickDoubleScoreAddition;
+    }
+    else {
+        clickAddition = clickScoreAddition;
+    }
+    ;
+    let newScore = currentScoreAsNum + clickAddition;
     // 1. Если первая шкала еще не полная — заполняем её
     if (normalVelocityBarValue < normalVelocityBarMaxValue && doubleVelocityBarValue === 0) {
         normalVelocityBarValue++;
