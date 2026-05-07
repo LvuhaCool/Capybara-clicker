@@ -1,14 +1,16 @@
 const scoreNum = document.querySelector('.score__number') as HTMLElement,
-  capybaraImg = document.querySelector('.img img') as HTMLElement,
+  capybaraImg = document.querySelector('.capybara') as HTMLElement,
   clickAudio: HTMLAudioElement = new Audio('./../audio/click.mp3'),
   normalVelocityBar = document.querySelector('.normal-speed') as HTMLElement,
   doubleVelocityBar = document.querySelector('.double-speed') as HTMLElement,
   normalVelocityBarMaxValue: number = 30,
   doubleVelocityBarMaxValue: number = 10,
   clickScoreAddition: number = 1,
-  clickDoubleScoreAddition: number = 2;
+  clickDoubleScoreAddition: number = 2,
+  combo = document.querySelector('.combo') as HTMLElement;
 let normalVelocityBarValue: number = Number(document.querySelector('.normal-speed')?.getAttribute('value')) || 0,
-  doubleVelocityBarValue: number = Number(document.querySelector('.double-speed')?.getAttribute('value')) || 0;
+  doubleVelocityBarValue: number = Number(document.querySelector('.double-speed')?.getAttribute('value')) || 0,
+  clickAddition: number;
 
 setInterval(() => {
     if (normalVelocityBarValue === 0) {
@@ -20,7 +22,20 @@ setInterval(() => {
         doubleVelocityBarValue--;
         doubleVelocityBar.setAttribute('value', doubleVelocityBarValue.toString());
     }
+
+    comboFun();
 }, 300);
+
+function comboFun() {
+    combo.classList.remove('combo-effect', 'no-doubling');
+
+    if (doubleVelocityBarValue > 0) {
+        combo.classList.add('combo-effect')
+    }
+    else {
+        combo.classList.add('no-doubling')
+    }
+}
 
   document.addEventListener('DOMContentLoaded', (): void => {
     let reloadScore: string | null = localStorage.getItem('score');
@@ -45,7 +60,6 @@ capybaraImg.addEventListener('click', (): void => {
 
     let currentScore = localStorage.getItem('score') as string;
     let currentScoreAsNum: number = Number(currentScore);
-    let clickAddition: number;
     if (doubleVelocityBarValue > 0 || normalVelocityBarValue === normalVelocityBarMaxValue && doubleVelocityBarValue === 0) {
         clickAddition = clickDoubleScoreAddition
     }
@@ -53,6 +67,8 @@ capybaraImg.addEventListener('click', (): void => {
         clickAddition = clickScoreAddition
     };
     let newScore: number = currentScoreAsNum + clickAddition;
+
+    comboFun();
 
     // 1. Если первая шкала еще не полная — заполняем её
 if (normalVelocityBarValue < normalVelocityBarMaxValue && doubleVelocityBarValue === 0) {

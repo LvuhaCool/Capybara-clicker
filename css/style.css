@@ -1,5 +1,9 @@
 @import url('./reset.css');
 
+:root {
+    --combo-font-size: 50px;
+}
+
 .wrapper {
     width: 100vw;
     height: 100vh;
@@ -72,10 +76,48 @@ main {
     transform: scale(0.75);
 }
 
+.combo {
+    position: absolute;
+    bottom: 50vh;
+    left: 30vw;
+    display: inline-block;
+    transform: rotate(-35deg);
+    font-size: 50px;
+    font-family: 'Russo One', sans-serif;
+    color: #e6f600;
+    text-shadow: 
+        -1.5px -1.5px 0 #000,  
+         1.5px -1.5px 0 #000,
+        -1.5px  1.5px 0 #000,
+         1.5px  1.5px 0 #000;
+}
+
+.no-doubling {
+    display: none;
+}
+
+.combo-effect {
+    animation-name: combo-animation;
+    animation-duration: 0.75s;
+    animation-iteration-count: infinite;
+}
+
 footer {
     margin-top: 30px;
     margin-bottom: 30px;
 }
+
+/* @media (max-width: 1200px) {
+    .combo {
+        left: -100px;
+    }
+}
+
+@media (max-width: 900px) {
+    .combo {
+        font-size: 36px;
+    }
+} */
 
 @media (max-width: 800px) {
     .score, .heading {
@@ -83,6 +125,10 @@ footer {
     }
     .speed-bar {
         left: 3vw;
+    }
+
+    :root {
+        --combo-font-size: 40px;
     }
 }
 
@@ -95,5 +141,19 @@ footer {
 @media (max-width: 400px) {
     .score, .heading {
         font-size: 17px;
+    }
+}
+
+@keyframes combo-animation {
+    0% {
+        font-size: var(--combo-font-size);
+    }
+    
+    50% {
+        font-size: 30px;
+    }
+
+    100% {
+        font-size: var(--combo-font-size);
     }
 }
