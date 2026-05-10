@@ -1,3 +1,4 @@
+// Константы
 const scoreNum = document.querySelector('.score__number') as HTMLElement,
   capybaraImg = document.querySelector('.capybara') as HTMLElement,
   clickAudio: HTMLAudioElement = new Audio('./../audio/click.mp3'),
@@ -8,10 +9,13 @@ const scoreNum = document.querySelector('.score__number') as HTMLElement,
   clickScoreAddition: number = 1,
   clickDoubleScoreAddition: number = 2,
   combo = document.querySelector('.combo') as HTMLElement;
+
+// Переменные
 let normalVelocityBarValue: number = Number(document.querySelector('.normal-speed')?.getAttribute('value')) || 0,
   doubleVelocityBarValue: number = Number(document.querySelector('.double-speed')?.getAttribute('value')) || 0,
   clickAddition: number;
 
+// Каждые 300 миллисекунд (0,3 секунды) обновляем скорость
 setInterval(() => {
     if (normalVelocityBarValue === 0) {
         normalVelocityBarValue = normalVelocityBarValue;
@@ -26,6 +30,7 @@ setInterval(() => {
     comboFun();
 }, 300);
 
+// Функция добавления спецэффекта большой скорости
 function comboFun() {
     combo.classList.remove('combo-effect', 'no-doubling');
 
@@ -37,7 +42,8 @@ function comboFun() {
     }
 }
 
-  document.addEventListener('DOMContentLoaded', (): void => {
+// Функция сохранения очков после перезагрузки страницы, реализованная через localStorage
+document.addEventListener('DOMContentLoaded', (): void => {
     let reloadScore: string | null = localStorage.getItem('score');
 
     if (!reloadScore) {
@@ -49,6 +55,7 @@ function comboFun() {
     }
 })
 
+// Обработчик клика по капибаре и последующий функционал: аудио, сжатие капибары, обновление переменной добавления очков, вызов функции  с комбо-спецэффектом (при большой скорости), обновление скорости и обновление очков
 capybaraImg.addEventListener('click', (): void => {
     clickAudio.play();
 
@@ -70,16 +77,15 @@ capybaraImg.addEventListener('click', (): void => {
 
     comboFun();
 
-    // 1. Если первая шкала еще не полная — заполняем её
-if (normalVelocityBarValue < normalVelocityBarMaxValue && doubleVelocityBarValue === 0) {
-    normalVelocityBarValue++;
-    normalVelocityBar.setAttribute('value', normalVelocityBarValue.toString());
-} 
-// 2. Если первая полная (или уже есть заряд во второй) и вторая не полная — заполняем вторую
-else if (doubleVelocityBarValue < doubleVelocityBarMaxValue) {
-    doubleVelocityBarValue++;
-    doubleVelocityBar.setAttribute('value', doubleVelocityBarValue.toString());
-}
+    if (normalVelocityBarValue < normalVelocityBarMaxValue && doubleVelocityBarValue === 0) {
+        normalVelocityBarValue++;
+        normalVelocityBar.setAttribute('value', normalVelocityBarValue.toString());
+    } 
+
+    else if (doubleVelocityBarValue < doubleVelocityBarMaxValue) {
+        doubleVelocityBarValue++;
+        doubleVelocityBar.setAttribute('value', doubleVelocityBarValue.toString());
+    }
     let newScoreAsString: string = newScore.toString();
     scoreNum.textContent = newScoreAsString;
     localStorage.setItem('score', newScoreAsString);
